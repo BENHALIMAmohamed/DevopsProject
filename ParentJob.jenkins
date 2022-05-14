@@ -1,0 +1,26 @@
+pipeline {
+    agent {label 'master'}
+
+    stages {
+        stage('run k8s_project') {
+            steps {
+                build (propagate: false, job: 'k8s_project')
+           }
+        }
+        stage('run k8s_deploy') {
+            steps {
+                build (propagate: false, job: 'k8s_deploy')
+
+           }
+        }
+
+        
+
+    }
+    post {
+      success {
+         emailext  attachLog: true, body: 'main job has been launched', compressLog: true, subject: 'Docker_status', to: 'benhalimamohamed.ca@gmail.com'
+            }
+    }
+
+}
