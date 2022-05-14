@@ -10,7 +10,6 @@ pipeline {
         steps {
             
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                bat 'minikube start'
                 bat 'kubectl delete --all deployments'
                 bat 'kubectl delete --all services'   
             }
