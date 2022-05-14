@@ -11,7 +11,8 @@ pipeline {
         steps {
             
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-               
+                bat'kubectl delete deploy voting-app-deploy'
+                bat'kubectl delete service voting-service'
                 bat 'kubectl create -f  ./voting-app-deploy.yaml'
                 bat 'kubectl create -f ./voting-app-service.yaml' 
                 
@@ -21,6 +22,8 @@ pipeline {
         stage('result') {
         steps {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                bat'kubectl delete deploy result-app-deploy'
+                bat'kubectl delete service result-service'
                 bat 'kubectl create -f ./result-app-deploy.yaml'
                 bat 'kubectl create -f ./result-app-service.yaml'
             }
@@ -31,6 +34,8 @@ pipeline {
 
         steps {
              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                bat'kubectl delete deploy postgres-deploy'
+                bat'kubectl delete service db'
                 bat 'kubectl create -f ./postgres-deploy.yaml'
                 bat 'kubectl create -f ./postgres-service.yaml'
             }
@@ -40,6 +45,8 @@ pipeline {
 
         steps {
              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                bat'kubectl delete deploy redis-deploy'
+                bat'kubectl delete service redis'
                 bat 'kubectl create -f ./redis-deploy.yaml'
                 bat 'kubectl create -f ./redis-service.yaml'
             }
@@ -51,6 +58,7 @@ pipeline {
 
         steps {
              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                bat'kubectl delete deploy worker-app-deploy' 
                 bat 'kubectl create -f ./voting-app-service.yaml'
                 
             }
